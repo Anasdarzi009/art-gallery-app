@@ -712,7 +712,7 @@ Records: 3  Duplicates: 0  Warnings: 0
 mysql> desc  CustomerPhone;
 +-------------+-------------+------+-----+---------+-------+
 | Field       | Type        | Null | Key | Default | Extra |
-+-------------+-------------+------+-----+---------+-------+
++-------------+-------------+------+-----+---------+-------+	
 | PhoneID     | int         | NO   | PRI | NULL    |       |
 | CustomerID  | int         | YES  |     | NULL    |       |
 | PhoneNumber | varchar(20) | YES  |     | NULL    |       |

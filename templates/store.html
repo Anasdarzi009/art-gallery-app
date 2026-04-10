@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GalleryOS | Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { brand: { 400: '#818cf8', 500: '#6366f1' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050505; color: #e5e5e5; }
+        .glass-panel { background: rgba(20, 20, 20, 0.4); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen relative">
+    
+    <header class="h-20 flex items-center justify-between px-8 glass-panel border-b border-white/5 sticky top-0 z-40">
+        <div class="flex items-center">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-purple-500 flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+            </div>
+            <h1 class="text-xl font-bold text-white tracking-tight">GalleryOS Collection</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="text-sm text-gray-400">Welcome, Collector</span>
+            <a href="/login" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors">Sign Out</a>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full p-8">
+        <div class="mb-10">
+            <h2 class="text-3xl font-bold text-white">Acquire Masterpieces</h2>
+            <p class="text-gray-400 mt-2">Browse and purchase exclusive artwork directly from the vault.</p>
+        </div>
+
+        <div id="art-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            </div>
+    </main>
+
+    <div id="toast" class="fixed bottom-5 right-5 glass-panel px-6 py-4 rounded-xl border-emerald-500/30 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)] transform translate-y-20 opacity-0 z-50">
+        Successfully processed acquisition!
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchArtworks();
+        });
+
+        function formatINR(value) {
+            return `₹${Number(value || 0).toLocaleString('en-IN')}`;
+        }
+
+        async function fetchArtworks() {
+            try {
+                const res = await fetch('/api/artworks');
+                const arts = await res.json();
+                const grid = document.getElementById('art-grid');
+                
+                if(arts.length === 0) {
+                    grid.innerHTML = `<p class="text-gray-500 col-span-full">No artwork available at the moment.</p>`;
+                    return;
+                }
+
+                grid.innerHTML = arts.map(art => `
+                    <div class="art-card glass-panel rounded-2xl overflow-hidden group border border-white/5 transition-transform hover:-translate-y-2">
+                        <div class="h-48 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center relative">
+                            <svg class="w-10 h-10 text-gray-600 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div class="p-5 flex flex-col">
+                            <h3 class="text-lg font-bold text-white truncate">${art.title}</h3>
+                            <div class="flex gap-2 mt-2 mb-4">
+                                <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2 py-1 rounded text-gray-400">${art.style}</span>
+                                <span class="text-[10px] uppercase tracking-wider bg-white/5 px-2 py-1 rounded text-gray-400">${art.year}</span>
+                            </div>
+                            <div class="flex justify-between items-end mt-auto pt-4 border-t border-white/5">
+                                <div>
+                                    <p class="text-[10px] text-gray-500 uppercase">Price</p>
+                                    <p class="text-lg font-bold text-emerald-400">${formatINR(art.price)}</p>
+                                </div>
+                                <button onclick="buyArt(${art.id}, this)" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-[0_0_15px_rgba(99,102,241,0.3)]">
+                                    Acquire
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                gsap.from(".art-card", { y: 30, opacity: 0, stagger: 0.1, duration: 0.6, ease: "back.out(1.2)" });
+            } catch (err) {
+                console.error("Failed to load artworks");
+            }
+        }
+
+        async function buyArt(artId, btnElement) {
+            btnElement.disabled = true;
+            btnElement.innerHTML = 'Processing...';
+            
+            const formData = new FormData();
+            formData.append('art_id', artId);
+
+            try {
+                const res = await fetch('/api/orders', { method: 'POST', body: formData });
+                const data = await res.json();
+                
+                if(res.ok) {
+                    // Show Toast
+                    const toast = document.getElementById('toast');
+                    gsap.to(toast, { y: 0, opacity: 1, duration: 0.4 });
+                    setTimeout(() => gsap.to(toast, { y: 20, opacity: 0, duration: 0.4 }), 3000);
+                    
+                    // Remove card visually
+                    gsap.to(btnElement.closest('.art-card'), { scale: 0.8, opacity: 0, duration: 0.4, onComplete: () => fetchArtworks() });
+                } else {
+                    alert(data.detail);
+                    btnElement.innerHTML = 'Acquire';
+                    btnElement.disabled = false;
+                }
+            } catch(e) {
+                alert("Transaction failed.");
+                btnElement.innerHTML = 'Acquire';
+                btnElement.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

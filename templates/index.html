@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GalleryOS | Premium Dark Dashboard</title>
+<link rel="stylesheet" href="/static/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#050505',
+                        surface: '#0a0a0a',
+                        surface2: '#121212',
+                        brand: {
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            glow: 'rgba(99, 102, 241, 0.4)'
+                        },
+                        accent: {
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            glow: 'rgba(168, 85, 247, 0.4)'
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'glass': 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
+                    },
+                    boxShadow: {
+                        'neon': '0 0 20px var(--tw-shadow-color)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+ 
+</head>
+<body class="flex h-screen w-full relative">
+
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div id="particles"></div>
+
+    <aside id="sidebar" class="w-64 flex-shrink-0 glass-panel border-r border-white/5 flex flex-col transform -translate-x-full z-30 relative shadow-glass">
+        <div class="h-20 flex items-center px-6 border-b border-white/5">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center mr-3 shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+            </div>
+            <span class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 tracking-tight text-xl">GalleryOS</span>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-8 px-4 space-y-2">
+            <p class="px-2 text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4">Menu</p>
+            
+            <button onclick="navigateTo('dashboard')" data-nav="dashboard" class="nav-btn w-full flex items-center px-4 py-3 text-sm font-medium rounded-xl text-white bg-white/10 border border-white/10 shadow-[0_0_10px_rgba(255,255,255,0.05)] transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-transparent opacity-100 transition-opacity"></div>
+                <svg class="w-5 h-5 mr-3 text-brand-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                <span class="relative z-10">Dashboard</span>
+            </button>
+            
+            <button onclick="navigateTo('artists')" data-nav="artists" class="nav-btn w-full flex items-center px-4 py-3 text-sm font-medium rounded-xl text-gray-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/5 transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <svg class="w-5 h-5 mr-3 text-gray-500 group-hover:text-brand-400 transition-colors relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <span class="relative z-10">Artists</span>
+            </button>
+            
+            <button onclick="navigateTo('artworks')" data-nav="artworks" class="nav-btn w-full flex items-center px-4 py-3 text-sm font-medium rounded-xl text-gray-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/5 transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <svg class="w-5 h-5 mr-3 text-gray-500 group-hover:text-brand-400 transition-colors relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span class="relative z-10">Artworks</span>
+            </button>
+
+            <button onclick="navigateTo('transactions')" data-nav="transactions"
+class="nav-btn w-full flex items-center px-4 py-3 text-sm font-medium rounded-xl text-gray-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/5 transition-all duration-300 relative overflow-hidden group">
+
+<div class="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+<svg class="w-5 h-5 mr-3 text-gray-500 group-hover:text-brand-400 transition-colors relative z-10"
+fill="none"
+stroke="currentColor"
+viewBox="0 0 24 24">
+
+<path stroke-linecap="round"
+stroke-linejoin="round"
+stroke-width="1.5"
+d="M3 10h18M7 15h1m4 0h1m4 0h1M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/>
+
+</svg>
+
+<span class="relative z-10">Transactions</span>
+
+</button>
+
+<button onclick="navigateTo('orders')" data-nav="orders"
+class="nav-btn w-full flex items-center px-4 py-3 text-sm font-medium rounded-xl text-gray-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/5 transition-all duration-300 relative overflow-hidden group">
+
+<div class="absolute inset-0 bg-gradient-to-r from-brand-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+<svg class="w-5 h-5 mr-3 text-gray-500 group-hover:text-brand-400 transition-colors relative z-10"
+fill="none"
+stroke="currentColor"
+viewBox="0 0 24 24">
+
+<path stroke-linecap="round"
+stroke-linejoin="round"
+stroke-width="1.5"
+d="M20 13V7a2 2 0 00-2-2H6a2 2 0 00-2 2v6m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0H4"/>
+
+</svg>
+
+<span class="relative z-10">Orders</span>
+
+</button>
+        </nav>
+
+        <div class="p-4 border-t border-white/5 bg-black/20">
+            <div class="flex items-center hover:bg-white/5 p-3 rounded-xl cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 flex items-center justify-center text-sm font-bold text-white shadow-inner relative overflow-hidden">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=transparent" alt="Avatar" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-white leading-none">Admin Curator</p>
+                    <p class="text-xs text-gray-500 mt-1.5">admin@gallery.xyz</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col min-w-0 relative z-20">
+        
+        <header class="h-20 flex items-center justify-between px-8 glass-panel border-b border-white/5 sticky top-0 z-40">
+            <h1 id="page-title" class="text-2xl font-bold text-white tracking-tight drop-shadow-md">Dashboard</h1>
+            
+            <div class="flex items-center space-x-6">
+                <div class="relative hidden sm:block group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-4 w-4 text-gray-400 group-focus-within:text-brand-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" id="global-search" class="block w-72 pl-11 pr-4 py-2.5 border border-white/10 rounded-full leading-5 bg-black/40 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 focus:bg-black/60 sm:text-sm transition-all shadow-inner backdrop-blur-md" placeholder="Search commands, artists, artworks...">
+                    
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <span class="text-gray-500 text-xs border border-white/10 rounded px-1.5 py-0.5 bg-white/5">⌘K</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2 bg-black/40 px-4 py-2 rounded-full border border-white/10 shadow-inner backdrop-blur-md">
+                    <span class="relative flex h-2 w-2">
+                      <span id="api-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span id="api-dot" class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                    </span>
+                    <span id="api-status" class="text-xs font-semibold text-emerald-400 tracking-wide">API Connected</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 lg:p-10" id="main-scroll-area">
+            
+            <section id="dashboard" class="view-section active max-w-7xl mx-auto w-full">
+                
+                <div class="flex flex-wrap gap-4 mb-8">
+                    <button onclick="navigateTo('artists')" class="flex items-center px-5 py-2.5 rounded-xl glass-panel text-sm font-semibold text-white hover:bg-white/10 border border-white/10 hover:border-brand-500/50 transition-all shadow-sm">
+                        <svg class="w-4 h-4 mr-2 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        Add Artist
+                    </button>
+                    <button onclick="navigateTo('artworks')" class="flex items-center px-5 py-2.5 rounded-xl glass-panel text-sm font-semibold text-white hover:bg-white/10 border border-white/10 hover:border-accent-500/50 transition-all shadow-sm">
+                        <svg class="w-4 h-4 mr-2 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                        Add Artwork
+                    </button>
+                    <button onclick="navigateTo('artists')" class="flex items-center px-5 py-2.5 rounded-xl glass-panel text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/10 border border-transparent transition-all">
+                        View Artists
+                    </button>
+                    <button onclick="navigateTo('artworks')" class="flex items-center px-5 py-2.5 rounded-xl glass-panel text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/10 border border-transparent transition-all">
+                        View Artworks
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="dashboard-module stat-card glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-brand-500/50 transition-colors duration-500">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-brand-500/20 rounded-full blur-2xl group-hover:bg-brand-500/30 transition-all"></div>
+                        <p class="text-xs font-medium text-gray-400 mb-1 relative z-10 uppercase tracking-wider">Total Artists</p>
+                        <h2 class="text-4xl font-bold text-white tracking-tight counter" id="count-artists" data-target="0">0</h2>
+                        <div class="absolute bottom-4 right-4 p-2 bg-brand-500/10 rounded-lg text-brand-400 border border-brand-500/20">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="dashboard-module stat-card glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-accent-500/50 transition-colors duration-500">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-accent-500/20 rounded-full blur-2xl group-hover:bg-accent-500/30 transition-all"></div>
+                        <p class="text-xs font-medium text-gray-400 mb-1 relative z-10 uppercase tracking-wider">Total Artworks</p>
+                        <h2 class="text-4xl font-bold text-white tracking-tight counter" id="count-artworks" data-target="0">0</h2>
+                        <div class="absolute bottom-4 right-4 p-2 bg-accent-500/10 rounded-lg text-accent-400 border border-accent-500/20">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="dashboard-module stat-card glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/50 transition-colors duration-500">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-emerald-500/20 rounded-full blur-2xl group-hover:bg-emerald-500/30 transition-all"></div>
+                        <p class="text-xs font-medium text-gray-400 mb-1 relative z-10 uppercase tracking-wider">Gallery Value</p>
+                        <h2 class="text-4xl font-bold text-emerald-400 tracking-tight flex items-baseline relative z-10">
+                            <span class="text-2xl mr-1 text-emerald-500">₹</span><span class="counter" id="count-value" data-target="0">0</span>
+                        </h2>
+                        <div class="absolute bottom-4 right-4 p-2 bg-emerald-500/10 rounded-lg text-emerald-400 border border-emerald-500/20">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="dashboard-module stat-card glass-panel rounded-2xl p-6 relative overflow-hidden group hover:border-rose-500/50 transition-colors duration-500">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-rose-500/20 rounded-full blur-2xl group-hover:bg-rose-500/30 transition-all"></div>
+                        <p class="text-xs font-medium text-gray-400 mb-1 relative z-10 uppercase tracking-wider">Added This Month</p>
+                        <h2 class="text-4xl font-bold text-white tracking-tight flex items-baseline relative z-10">
+                            +<span class="counter" id="count-new-artists" data-target="0">0</span>
+                        </h2>
+                        <div class="absolute bottom-4 right-4 p-2 bg-rose-500/10 rounded-lg text-rose-400 border border-rose-500/20">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    
+                    <div class="dashboard-module lg:col-span-2 glass-panel rounded-2xl border border-white/5 overflow-hidden flex flex-col hover-card group relative">
+                        <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/30 z-10">
+                            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">Arts Module: Featured</h3>
+                            <button onclick="navigateTo('artworks')" class="text-xs text-brand-400 hover:text-brand-300 transition-colors font-medium">View Catalog →</button>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col md:flex-row gap-6 relative z-10">
+                            <div class="w-full md:w-1/3 h-48 rounded-xl overflow-hidden border border-white/10 flex-shrink-0">
+    <img id="featured-image"
+         src=""
+         class="w-full h-full object-cover">
+</div>
+                            <div class="flex-1 flex flex-col justify-center">
+                                <h4 class="text-2xl font-bold text-white mb-2" id="featured-title">Loading...</h4>
+                                <div class="flex gap-2 mb-4">
+                                    <span class="px-2.5 py-1 rounded bg-brand-500/20 border border-brand-500/30 text-brand-300 text-xs font-bold uppercase" id="featured-style">Style</span>
+                                    <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-gray-300 text-xs font-bold" id="featured-year">Year</span>
+                                </div>
+                                <div class="mt-auto">
+                                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Valuation</p>
+                                    <p class="text-3xl font-bold text-white" id="featured-price">₹0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-module lg:col-span-1 glass-panel rounded-2xl border border-white/5 overflow-hidden hover-card relative">
+                        <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/30 z-10">
+                            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">Transactions</h3>
+                        </div>
+                        <div class="p-6 relative z-10">
+                            <p class="text-xs text-gray-400 mb-1">Highest Priced Asset</p>
+                            <h4 class="text-xl font-bold text-emerald-400 mb-6" id="tx-highest-price">₹0</h4>
+                            
+                            <p class="text-xs text-gray-400 mb-3 border-b border-white/5 pb-2">Recent Transfers</p>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500 mr-2 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+                                        <span class="text-sm text-gray-300 font-medium">TX-8921A</span>
+                                    </div>
+                                    <span class="text-sm text-white font-bold">₹12,500</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500 mr-2 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+                                        <span class="text-sm text-gray-300 font-medium">TX-7742B</span>
+                                    </div>
+                                    <span class="text-sm text-white font-bold">₹4,200</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 rounded-full bg-amber-500 mr-2 shadow-[0_0_8px_rgba(245,158,11,0.8)]"></div>
+                                        <span class="text-sm text-gray-300 font-medium">TX-PEND</span>
+                                    </div>
+                                    <span class="text-sm text-gray-400 font-bold italic">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-module lg:col-span-1 glass-panel rounded-2xl border border-white/5 overflow-hidden hover-card relative">
+                        <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/30 z-10">
+                            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">Stock & Inventory</h3>
+                        </div>
+                        <div class="p-6 relative z-10">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm text-gray-400">Available Artworks</span>
+                                <span class="text-sm font-bold text-white" id="stock-available">0</span>
+                            </div>
+                            <div class="w-full bg-white/5 rounded-full h-2 mb-6 border border-white/5">
+                                <div class="bg-brand-500 h-2 rounded-full" id="stock-bar" style="width: 0%"></div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5">
+                                <div class="flex items-center gap-3">
+                                    <div class="p-2 bg-accent-500/20 rounded-lg text-accent-400">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                    </div>
+                                    <span class="text-sm text-gray-300">Sold Assets</span>
+                                </div>
+                                <span class="text-lg font-bold text-white">42</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-module lg:col-span-1 glass-panel rounded-2xl border border-white/5 overflow-hidden hover-card relative">
+                        <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/30 z-10">
+                            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">Order Updates</h3>
+                            <span class="flex h-2 w-2 relative">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                            </span>
+                        </div>
+                        <div class="p-0 relative z-10">
+                            <ul class="divide-y divide-white/5">
+                                <li class="p-4 flex justify-between items-center hover:bg-white/5 transition-colors">
+                                    <div>
+                                        <p class="text-sm font-bold text-white">ORD-2099</p>
+                                        <p class="text-xs text-gray-500">Processing</p>
+                                    </div>
+                                    <span class="px-2 py-1 bg-amber-500/20 text-amber-400 text-[10px] font-bold uppercase rounded border border-amber-500/30">Active</span>
+                                </li>
+                                <li class="p-4 flex justify-between items-center hover:bg-white/5 transition-colors">
+                                    <div>
+                                        <p class="text-sm font-bold text-white">ORD-2098</p>
+                                        <p class="text-xs text-gray-500">Shipped</p>
+                                    </div>
+                                    <span class="px-2 py-1 bg-emerald-500/20 text-emerald-400 text-[10px] font-bold uppercase rounded border border-emerald-500/30">En Route</span>
+                                </li>
+                                <li class="p-4 flex justify-between items-center hover:bg-white/5 transition-colors">
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-400">ORD-2097</p>
+                                        <p class="text-xs text-gray-600">Delivered</p>
+                                    </div>
+                                    <span class="px-2 py-1 bg-gray-500/20 text-gray-400 text-[10px] font-bold uppercase rounded border border-gray-500/30">Complete</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-module lg:col-span-1 glass-panel rounded-2xl border border-white/5 overflow-hidden hover-card relative">
+                        <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/30 z-10">
+                            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">Customers</h3>
+                        </div>
+                        <div class="p-6 relative z-10 flex flex-col h-[calc(100%-53px)] justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 mb-1">Total Collector Base</p>
+                                <h4 class="text-3xl font-bold text-white mb-6">1,204</h4>
+                            </div>
+                            
+                            <div>
+                                <p class="text-xs text-gray-500 mb-2">Recent VIP Registrations</p>
+                                <div class="flex -space-x-3">
+                                    <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://api.dicebear.com/7.x/avataaars/svg?seed=VIP1&backgroundColor=2a2a2a" alt="Customer">
+                                    <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://api.dicebear.com/7.x/avataaars/svg?seed=VIP2&backgroundColor=1a1a1a" alt="Customer">
+                                    <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://api.dicebear.com/7.x/avataaars/svg?seed=VIP3&backgroundColor=3a3a3a" alt="Customer">
+                                    <img class="w-10 h-10 rounded-full border-2 border-[#121212]" src="https://api.dicebear.com/7.x/avataaars/svg?seed=VIP4&backgroundColor=0a0a0a" alt="Customer">
+                                    <div class="w-10 h-10 rounded-full border-2 border-[#121212] bg-white/10 flex items-center justify-center text-xs font-bold text-white backdrop-blur-sm">
+                                        +12
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+                    
+                    <div class="dashboard-module xl:col-span-1 glass-panel rounded-2xl border border-white/5 overflow-hidden hover-card relative">
+                        <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/30 z-10">
+                            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">Recently Added Artists</h3>
+                            <button onclick="navigateTo('artists')" class="text-xs text-gray-400 hover:text-white transition-colors">View All</button>
+                        </div>
+                        <div class="p-0 relative z-10">
+                            <ul id="recent-artists-list" class="divide-y divide-white/5">
+                                <li class="p-6 text-sm text-gray-500 text-center">Loading artists...</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-module xl:col-span-2 glass-panel rounded-2xl border border-white/5 overflow-hidden hover-card relative">
+                        <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-black/30 z-10">
+                            <h3 class="text-sm font-semibold text-white tracking-wide uppercase">Collection Preview</h3>
+                        </div>
+                        <div class="p-6 relative z-10">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="gallery-preview-grid">
+                                <div class="text-sm text-gray-500 col-span-full">Loading previews...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="artists" class="view-section max-w-7xl mx-auto w-full">
+                <div class="flex justify-between items-end mb-8">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white tracking-tight drop-shadow-md">Artist Directory</h2>
+                        <p class="text-sm text-gray-400 mt-2">Manage decentralized artist profiles and metadata.</p>
+                    </div>
+                    <button onclick="showArtistForm()" 
+class="inline-flex items-center justify-center rounded-xl bg-white text-black px-5 py-2.5 text-sm font-semibold shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:bg-gray-200 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] focus:outline-none transition-all duration-300 transform hover:-translate-y-0.5">
+<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+</svg>
+Deploy Artist
+</button>
+                </div>
+                <div id="artist-form" class="glass-panel p-6 rounded-xl mb-6 border border-white/10 hidden">
+
+<h3 class="text-lg font-bold text-white mb-4">Add New Artist</h3>
+
+<div class="grid grid-cols-2 gap-4">
+
+<input id="artistName" placeholder="Artist Name"
+class="p-2 rounded bg-black border border-white/10 text-white">
+
+<input id="artistQualification" placeholder="Qualification"
+class="p-2 rounded bg-black border border-white/10 text-white">
+
+<input id="artistAddress" placeholder="Address"
+class="p-2 rounded bg-black border border-white/10 text-white">
+
+<input id="artistContact" placeholder="Contact"
+class="p-2 rounded bg-black border border-white/10 text-white">
+
+</div>
+
+<div class="mt-4 flex gap-3">
+
+<button onclick="submitArtist()"
+class="bg-brand-500 px-4 py-2 rounded text-white">
+Add Artist
+</button>
+
+<button onclick="hideArtistForm()"
+class="bg-gray-700 px-4 py-2 rounded text-white">
+Cancel
+</button>
+
+</div>
+
+</div>
+                <div id="artists-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    </div>
+            </section>
+
+            <section id="artworks" class="view-section max-w-7xl mx-auto w-full">
+                <div class="flex justify-between items-end mb-8">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white tracking-tight drop-shadow-md">Artwork Vault</h2>
+                        <p class="text-sm text-gray-400 mt-2">Browse the immutable gallery collection inventory.</p>
+                    </div>
+                    <button onclick="showArtworkForm()" class="inline-flex items-center justify-center rounded-xl bg-brand-600 text-white px-5 py-2.5 text-sm font-semibold shadow-[0_0_20px_rgba(99,102,241,0.4)] hover:bg-brand-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.6)] focus:outline-none transition-all duration-300 transform hover:-translate-y-0.5">
+
+<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+</svg>
+
+Mint Artwork
+
+</button>
+                </div>
+                <div id="artwork-form" class="glass-panel p-6 rounded-xl mb-6 border border-white/10 hidden">
+
+<h3 class="text-lg font-bold text-white mb-4">Add New Artwork</h3>
+
+<div class="grid grid-cols-2 gap-4">
+
+<input id="artTitle" placeholder="Artwork Title"
+class="p-2 rounded bg-black border border-white/10 text-white">
+
+<input id="artStyle" placeholder="Style"
+class="p-2 rounded bg-black border border-white/10 text-white">
+
+<input id="artYear" placeholder="Year"
+class="p-2 rounded bg-black border border-white/10 text-white">
+
+<input id="artPrice" placeholder="Price"
+class="p-2 rounded bg-black border border-white/10 text-white">
+
+</div>
+
+<div class="mt-4 flex gap-3">
+
+<button onclick="submitArtwork()"
+class="bg-brand-500 px-4 py-2 rounded text-white">
+Add Artwork
+</button>
+
+<button onclick="hideArtworkForm()"
+class="bg-gray-700 px-4 py-2 rounded text-white">
+Cancel
+</button>
+
+</div>
+
+</div>
+                <div id="artworks-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    </div>
+            </section>
+
+
+            <section id="transactions" class="view-section max-w-7xl mx-auto w-full">
+
+<h2 class="text-3xl font-bold text-white mb-6">Transactions</h2>
+
+<div class="glass-panel p-6 rounded-xl">
+
+<table class="w-full text-left">
+
+<thead class="text-gray-400 border-b border-white/10">
+<tr>
+<th class="pb-3">Transaction ID</th>
+<th class="pb-3">Artwork</th>
+<th class="pb-3">Price</th>
+<th class="pb-3">Status</th>
+</tr>
+</thead>
+
+<tbody class="text-white">
+
+<tr class="border-b border-white/5">
+<td class="py-3">TX-8921A</td>
+<td>Mona Lisa</td>
+<td>₹12,500</td>
+<td class="text-green-400">Completed</td>
+</tr>
+
+<tr class="border-b border-white/5">
+<td class="py-3">TX-7742B</td>
+<td>The Scream</td>
+<td>₹4,200</td>
+<td class="text-green-400">Completed</td>
+</tr>
+
+<tr>
+<td class="py-3">TX-PEND</td>
+<td>Starry Night</td>
+<td>₹8,000</td>
+<td class="text-yellow-400">Pending</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section id="orders" class="view-section max-w-7xl mx-auto w-full">
+
+<h2 class="text-3xl font-bold text-white mb-6">Orders</h2>
+
+<div class="glass-panel p-6 rounded-xl">
+
+<table class="w-full text-left">
+
+<thead class="text-gray-400 border-b border-white/10">
+<tr>
+<th class="pb-3">Order ID</th>
+<th class="pb-3">Artwork</th>
+<th class="pb-3">Customer</th>
+<th class="pb-3">Price</th>
+<th class="pb-3">Status</th>
+</tr>
+</thead>
+
+<tbody class="text-white">
+
+<tr class="border-b border-white/5">
+
+<td class="py-3">ORD-2099</td>
+<td>Mona Lisa</td>
+<td>John</td>
+<td>₹95,000</td>
+<td class="text-yellow-400">Processing</td>
+
+</tr>
+
+<tr class="border-b border-white/5">
+<td class="py-3">ORD-2098</td>
+<td>Starry Night</td>
+<td>Emma</td>
+<td>₹42,000</td>
+<td class="text-green-400">Shipped</td>
+</tr>
+
+<tr>
+<td class="py-3">ORD-2097</td>
+<td>The Scream</td>
+<td>David</td>
+<td>₹18,000</td>
+<td class="text-gray-400">Delivered</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+        </div>
+    </main>
+
+<script src="/static/script.js"></script>
+</body>
+</html>

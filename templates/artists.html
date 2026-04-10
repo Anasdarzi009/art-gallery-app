@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Artists</title>
+</head>
+<body>
+
+<h1>Art Gallery Artists</h1>
+
+<ul>
+{% for artist in artists %}
+<li>
+<b>{{ artist.name }}</b> - {{ artist.qualification }} ({{ artist.address }})
+</li>
+{% endfor %}
+</ul>
+
+</body>
+</html>
