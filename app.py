@@ -130,35 +130,28 @@ async def login(request: Request) -> dict:
 
 @app.get("/artists")
 def get_artists():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM artists")
-    artists = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
     return [
         {
-            "id": a["artist_id"],
-            "name": a["name"],
-            "bio": a["qualification"],
-            "location": a["address"],
-            "image": "/static/default.jpg"
+            "artist_id": 1,
+            "name": "Anas",
+            "qualification": "Artist",
+            "address": "India",
+            "contact": "1234567890"
         }
-        for a in artists
     ]
 
 @app.get("/artworks")
 def get_artworks():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM art")
-    data = cursor.fetchall()
-    conn.close()
-    return data
-
+    return [
+        {
+            "art_id": 1,
+            "title": "Starry Night",
+            "style": "Art",
+            "year_in_made": "2024",
+            "price": 5000,
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/ea/The_Starry_Night.jpg"
+        }
+    ]
 @app.get("/api/artworks")
 def get_available_artworks():
     conn = get_connection()
@@ -532,34 +525,28 @@ async def signup(request: Request):
 
 @app.get("/artists")
 def get_artists():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM artists")
-    artists = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
     return [
         {
-            "id": a["artist_id"],
-            "name": a["name"],
-            "bio": a["qualification"],
-            "location": a["address"],
-            "image": "/static/default.jpg"
+            "artist_id": 1,
+            "name": "Anas",
+            "qualification": "Artist",
+            "address": "India",
+            "contact": "1234567890"
         }
-        for a in artists
     ]
 
 @app.get("/artworks")
 def get_artworks():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM art")
-    data = cursor.fetchall()
-    conn.close()
-    return data
+    return [
+        {
+            "art_id": 1,
+            "title": "Starry Night",
+            "style": "Art",
+            "year_in_made": "2024",
+            "price": 5000,
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/ea/The_Starry_Night.jpg"
+        }
+    ]
 
 @app.get("/api/artworks")
 def get_available_artworks():
