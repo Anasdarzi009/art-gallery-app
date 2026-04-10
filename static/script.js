@@ -551,7 +551,7 @@ d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6
 
 if(!confirm("Delete this artist?")) return;
 
-await fetch(`http://127.0.0.1:8000/artists/${id}`,{
+await fetch(`https://gallery-backend-0e83.onrender.com/artists/${id}`,{
 method:"DELETE"
 });
 
@@ -563,7 +563,7 @@ async function deleteArtwork(id){
 
 if(!confirm("Delete this artwork?")) return;
 
-await fetch(`http://127.0.0.1:8000/artworks/${id}`,{
+await fetch(`https://gallery-backend-0e83.onrender.com/artworks/${id}`,{
 method:"DELETE"
 });
 
@@ -614,7 +614,7 @@ const contact = document.getElementById("artistContact").value;
 
 if(editingArtistId){
 
-await fetch(`http://127.0.0.1:8000/artists/${editingArtistId}`,{
+await fetch(`https://gallery-backend-0e83.onrender.com/artists/${editingArtistId}`,{
 method:"PUT",
 headers:{
 "Content-Type":"application/json"
@@ -631,7 +631,7 @@ editingArtistId = null;
 
 }else{
 
-await fetch("http://127.0.0.1:8000/artists",{
+await fetch("https://gallery-backend-0e83.onrender.com/artists",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -673,7 +673,7 @@ const price=document.getElementById("artPrice").value
 
 if(editingArtworkId){
 
-await fetch(`http://127.0.0.1:8000/artworks/${editingArtworkId}`,{
+await fetch(`https://gallery-backend-0e83.onrender.com/artworks/${editingArtworkId}`,{
 method:"PUT",
 headers:{
 "Content-Type":"application/json"
@@ -690,7 +690,7 @@ editingArtworkId=null
 
 }else{
 
-await fetch("http://127.0.0.1:8000/artworks",{
+await fetch("https://gallery-backend-0e83.onrender.com/artworks",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
