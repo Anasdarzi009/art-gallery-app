@@ -1,5 +1,5 @@
 // System Config
-        const API_BASE = "https://your-backend-url.onrender.com";
+       const API_BASE = "https://gallery-backend-0e83.onrender.com";
         
         // Application State
         const state = {
