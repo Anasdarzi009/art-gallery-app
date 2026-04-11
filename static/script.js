@@ -210,7 +210,9 @@
             return {
                 ...art,
                 year: art.year ?? art.year_in_made ?? '2024',
-                image_url: art.image_url || FALLBACK_ART_IMAGE,
+                image_url: art.image_url 
+    ? `${API_BASE}/uploads/${art.image_url}` 
+    : FALLBACK_ART_IMAGE,
             };
         }
 
